@@ -3,7 +3,7 @@
 [This script](https://github.com/JirkaChadima/wt-demo-script/blob/master/index.js) is intended as a simple showcase of what
 Winding Tree platform is currently capable of.
 
-It uses only [@windingtree/wt-js-libs](https://github.com/windingtree/wt-js-libs) showcases access to data stored on
+It uses only [@windingtree/wt-js-libs](https://github.com/windingtree/wt-js-libs/tree/proposal/next) showcases access to data stored on
 
 - [https](https://github.com/windingtree/off-chain-adapter-http)
 - [swarm](https://github.com/windingtree/off-chain-adapter-swarm)

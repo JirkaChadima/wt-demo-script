@@ -12,11 +12,7 @@ const PASSWORD = 'windingtree';
 // However, this Wallet has some Ether on Ropsten,
 // so this example should work.
 
-// 3. Get your off-chain data ready
-// This is not provided by wt-js-libs out of the box
-const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
-
-// 4. Update your hotel on Winding Tree platform
+// 3. Remove your hotel from Winding Tree platform
 (async () => {
   // Get an instance of WTIndex wrapper
   const index = await libs.getWTIndex('0x407f550023eb6ad8a4797844489e17c5ced17e06');
@@ -26,11 +22,10 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
   wallet.unlock(PASSWORD);
 
   // Get a hotel instance
-  const hotel = await index.getHotel('0xDe3B2246491E985be275D78Fd74f79429249b05E');
+  const hotel = await index.getHotel('0x3583258a84A49B62214bC4c7B25110DD206021f6');
   // Change the hotel dataUri
-  hotel.dataUri = offChainDataUri
   // And fire up the on-chain modification
-  const result = await index.updateHotel(wallet, hotel);
+  const result = await index.removeHotel(wallet, hotel);
   console.log('transactions to check: ', result);
   // Don't forget to lock your wallet after you are done, you
   // don't want to leave your private keys lying around.

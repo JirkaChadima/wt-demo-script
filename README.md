@@ -1,6 +1,6 @@
 # Winding Tree demo script
 
-[This script](https://github.com/JirkaChadima/wt-demo-script/blob/master/index.js) is intended as a simple showcase of what
+This collection of scripts is intended as a simple showcase of what
 Winding Tree platform is currently capable of.
 
 It uses only [@windingtree/wt-js-libs](https://github.com/windingtree/wt-js-libs/tree/proposal/next) showcases access to data stored on

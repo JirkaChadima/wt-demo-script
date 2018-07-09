@@ -26,13 +26,30 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
   wallet.unlock(PASSWORD);
 
   // Get a hotel instance
-  const hotel = await index.getHotel('0xDe3B2246491E985be275D78Fd74f79429249b05E');
+  const hotel = await index.getHotel('0xea6c4eEe9c6e4bb0e53783C0648581702B75fC28');
   // Change the hotel dataUri
-  hotel.dataUri = offChainDataUri
-  // And fire up the on-chain modification
-  const result = await index.updateHotel(wallet, hotel);
-  console.log('transactions to check: ', result);
-  // Don't forget to lock your wallet after you are done, you
-  // don't want to leave your private keys lying around.
-  wallet.lock();
+  hotel.dataUri = offChainDataUri;
+  
+  try {
+    // Update the hotel data on-chain
+    // a. Get ready transaction data - update may produce multiple transactions
+    const transactionDataList = await index.updateHotel(hotel);
+    let receipt, transactions = [];
+    // b. Sign and send all of the transactions. You probably don't have to use our wallet abstraction.
+    for (let { transactionData, eventCallbacks } of transactionDataList) {
+      // This signs a transaction and sends it to be mined. You can get finer control
+      // of this by using your own eventCallbacks, handling each transaction sequentially etc.
+      transactions.push(wallet.signAndSendTransaction(transactionData, eventCallbacks));
+    }
+    const receipts = await Promise.all(transactions);
+    for(let receipt of receipts) {
+      // After the transaction is mined, you get
+      // a receipt which contains a transaciontHash, among other useful things.
+      console.log('transaction to check: ', receipt.transactionHash);
+    }
+  } finally {
+    // Don't forget to lock your wallet after you are done, you
+    // don't want to leave your private keys lying around.
+    wallet.lock();
+  }
 })();

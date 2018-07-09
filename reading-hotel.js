@@ -14,6 +14,15 @@ const libs = require('./config');
 
   // Notice how the approach is totally protocol agnostic
   for (let hotel of hotels) {
+    // You can benefit from a recursive shorthand method that downloads all of hotel data for you
+    const serializedHotel = await hotel.toPlainObject();
+    // And you can access all of the data in a simple, synchronous way
+    const hotelLocation = serializedHotel.dataUri.contents.descriptionUri.contents.location;
+    console.log(serializedHotel.address);
+    
+    
+    // OR with much finer control and a lot of await calls, you can do this:
+    
     // This actually fetches data from a hotel smart contract
     const hotelDataUri = await hotel.dataUri;
     // But it gets cached, so the second call is way faster

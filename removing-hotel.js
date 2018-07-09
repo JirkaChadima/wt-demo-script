@@ -21,13 +21,26 @@ const PASSWORD = 'windingtree';
   const wallet = await libs.createWallet(WALLET_FILE);
   wallet.unlock(PASSWORD);
 
+
   // Get a hotel instance
-  const hotel = await index.getHotel('0x3583258a84A49B62214bC4c7B25110DD206021f6');
-  // Change the hotel dataUri
-  // And fire up the on-chain modification
-  const result = await index.removeHotel(wallet, hotel);
-  console.log('transactions to check: ', result);
-  // Don't forget to lock your wallet after you are done, you
-  // don't want to leave your private keys lying around.
-  wallet.lock();
+  const hotel = await index.getHotel('0xea6c4eEe9c6e4bb0e53783C0648581702B75fC28');
+
+  
+  try {
+    // Remove the hotel
+    // a. Get ready transaction data
+    const { transactionData, eventCallbacks } = await index.removeHotel(hotel);
+    // b. Sign and send the transaction. You probably don't have to use our wallet abstraction.
+    // This signs a transaction and sends it to be mined. You can get finer control
+    // of this by using your own eventCallbacks, not awaiting the Promise etc.
+    const receipt = await wallet.signAndSendTransaction(transactionData, eventCallbacks);
+    // After the transaction is mined, you get
+    // a receipt which contains a transaciontHash, among other useful things.
+    console.log('transaction to check: ', receipt.transactionHash);
+  } finally {
+    // Don't forget to lock your wallet after you are done, you
+    // don't want to leave your private keys lying around.
+    wallet.lock();
+  }
+
 })();

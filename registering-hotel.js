@@ -25,21 +25,24 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
   const wallet = await libs.createWallet(WALLET_FILE);
   wallet.unlock(PASSWORD);
 
-  // Register the hotel itself
-  const result = await index.addHotel(wallet, {
-    dataUri: offChainDataUri,
-    manager: wallet.getAddress(),
-  });
-  // Check out the result. The library tries to return
-  // as quickly as possible.
-  // The hotel address is actually deterministically pre-computed,
-  // and the promise is resolved immediately after a transaction
-  // ID is known.
-  const newHotelAddress = result.address;
-  console.log('hotel address: ', newHotelAddress);
-  console.log('transactions to check: ', result.transactionIds);
-
-  // Don't forget to lock your wallet after you are done, you
-  // don't want to leave your private keys lying around.
-  wallet.lock();
+  try {
+    // Register the hotel itself
+    // a. Get ready transaction data
+    const { hotel, transactionData, eventCallbacks } = await index.addHotel({
+      manager: wallet.getAddress(),
+      dataUri: offChainDataUri,
+    });
+    // b. Sign and send the transaction. You probably don't have to use our wallet abstraction.
+    // This signs a transaction and waits for it to be mined. You can get finer control
+    // of this by using your own eventCallbacks, not waiting for the promise to be resolved etc.
+    const receipt = await wallet.signAndSendTransaction(transactionData, eventCallbacks);
+    // After the transaction is mined, one of the eventCallbacks
+    // sets the address of the freshly created hotel.
+    const newHotelAddress = hotel.address;
+    console.log('hotel address: ', newHotelAddress);
+  } finally {
+    // Don't forget to lock your wallet after you are done, you
+    // don't want to leave your private keys lying around.
+    wallet.lock();
+  }
 })();

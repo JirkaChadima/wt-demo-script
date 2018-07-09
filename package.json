@@ -6,7 +6,7 @@
   "dependencies": {
     "@windingtree/off-chain-adapter-http": "^2.0.0",
     "@windingtree/off-chain-adapter-swarm": "^3.1.0",
-    "@windingtree/wt-js-libs": "^0.2.3"
+    "@windingtree/wt-js-libs": "^0.2.4"
   },
   "devDependencies": {},
   "author": "Jirka Chadima <chadima.jiri@gmail.com>",

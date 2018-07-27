@@ -4,9 +4,9 @@
   "description": "Simple demonstration of @windingtreee/wt-js-libs usage",
   "main": "index.js",
   "dependencies": {
-    "@windingtree/off-chain-adapter-http": "^2.0.0",
-    "@windingtree/off-chain-adapter-swarm": "^3.1.0",
-    "@windingtree/wt-js-libs": "^0.2.7"
+    "@windingtree/off-chain-adapter-http": "^2.0.1",
+    "@windingtree/off-chain-adapter-swarm": "^3.2.0",
+    "@windingtree/wt-js-libs": "^0.2.8"
   },
   "devDependencies": {},
   "author": "Jirka Chadima <chadima.jiri@gmail.com>",

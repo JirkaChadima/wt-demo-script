@@ -4,7 +4,7 @@ const libs = require('./config');
 // This has to be in an async block due to the nature of distributed data
 (async () => {
   // Get an instance of WTIndex wrapper
-  const index = await libs.getWTIndex('0x407f550023eb6ad8a4797844489e17c5ced17e06');
+  const index = await libs.getWTIndex('0x933198455e38925bccb4bfe9fb59bac31d00b4d3');
 
   // We can get all hotels available in the WTIndex
   // - We will get only hotels on valid and accessible addresses

@@ -15,7 +15,7 @@ const PASSWORD = 'windingtree';
 // 3. Remove your hotel from Winding Tree platform
 (async () => {
   // Get an instance of WTIndex wrapper
-  const index = await libs.getWTIndex('0x933198455e38925bccb4bfe9fb59bac31d00b4d3');
+  const index = await libs.getWTIndex('0xfb562057d613175c850df65e435bb0824b65d319');
 
   // Create a Wallet abstraction and unlock it.
   const wallet = await libs.createWallet(WALLET_FILE);

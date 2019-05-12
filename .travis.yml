@@ -1,0 +1,15 @@
+notifications:
+  email: false
+dist: xenial
+sudo: false
+group: beta
+language: node_js
+cache:
+  directories:
+  - "$HOME/.npm"
+install: case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;
+jobs:
+  include:
+  - stage: test
+    script:
+    - echo 'travis run'

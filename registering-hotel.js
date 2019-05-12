@@ -1,3 +1,4 @@
+const web3utils = require('web3-utils');
 const libs = require('./config');
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -40,6 +41,34 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
     // sets the address of the freshly created hotel.
     const newHotelAddress = hotel.address;
     console.log('hotel address: ', newHotelAddress);
+
+    // To add a guarantor to a hotel, we need to create a guarantee.
+    // Normally it would have been a trusted third-party Ethereum address,
+    // here we use the same address as is the hotel owner.
+    // Guarantee is used by the platform users to determine the trust level
+    // of a hotel.
+    // You can use the tool on http://guarantee-generator.windingtree.com
+    // to create and sign the guarantee.
+    const monthFromNow = new Date();
+    monthFromNow.setMonth(monthFromNow.getMonth() + 1);
+    // Claim has to contain both hotel and guarantor address and has to expire
+    const rawClaim = {
+      "hotel": newHotelAddress,
+      "guarantor": wallet.getAddress(),
+      "expiresAt": monthFromNow.getTime(),
+    };
+    const hexClaim = web3utils.utf8ToHex(JSON.stringify(rawClaim));
+
+    // TODO replace calling an internal API after implementing https://github.com/windingtree/wt-js-libs/issues/284
+    const signed = await wallet._account.sign(JSON.stringify(hexClaim));
+    const guarantee = {
+      claim: hexClaim,
+      signature: signed.signature,
+    };
+    // After generating a guarantee, it has to be published alongside hotel data
+    // on offChainDataUri.
+    console.log('Guarantee would look like:');
+    console.log(guarantee);
   } finally {
     // Don't forget to lock your wallet after you are done, you
     // don't want to leave your private keys lying around.

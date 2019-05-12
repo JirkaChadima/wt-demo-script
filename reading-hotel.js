@@ -28,22 +28,23 @@ const libs = require('./config');
       // OR with much finer control and a lot of await calls, you can do this:
       
       // This actually fetches data from a hotel smart contract
-      const hotelDataUri = await hotel.dataUri;
+      //const hotelDataUri = await hotel.dataUri;
       // But it gets cached, so the second call is way faster
       //const hotelDataUri2 = await hotel.dataUri;
 
       // Let's initialize the off-chain data index - but no data is downloaded yet
-      //const offChainData = await hotel.dataIndex;
+      const offChainData = await hotel.dataIndex;
       // Only the next command actually initiates the download of the data index document
-      //const hotelDescriptionUri = await offChainData.contents.descriptionUri;
+      const hotelDescription = (await offChainData.contents).descriptionUri;
       // And only now the actual contents of descriptionUri gets downloaded
-      //const hotelName = await hotelDescriptionUri.contents.name;
+      const hotelName = (await hotelDescription.contents).name;
+      console.log('Hotel name:', hotelName);
       // But this is fast, because the document is already cached in memory.
       // The properties are of course interchangeable, so the data is downloaded
       // only when any of the data properties is accessed for the first time.
       //const hotelDescription = await hotelDescriptionUri.contents.description;
     } catch (e) {
-      console.log(hotel.address, e);
+      console.log(hotel.address, e.message);
     }
   }
 })();

@@ -1,7 +1,7 @@
 // 1. Load the libs
 const { WtJsLibs } = require('@windingtree/wt-js-libs');
-const { SwarmAdapter } = require('@windingtree/off-chain-adapter-swarm');
-const { HttpAdapter } = require('@windingtree/off-chain-adapter-http');
+const SwarmAdapter = require('@windingtree/off-chain-adapter-swarm');
+const HttpAdapter = require('@windingtree/off-chain-adapter-http');
 
 // 2. Configure the wt-js-libs
 module.exports = WtJsLibs.createInstance({
@@ -15,6 +15,7 @@ module.exports = WtJsLibs.createInstance({
       'bzz-raw': {
         options: {
           swarmProviderUrl: 'https://swarm-gateways.net/',
+          timeout: 1000,
         },
         create: (options) => {
           return new SwarmAdapter(options);

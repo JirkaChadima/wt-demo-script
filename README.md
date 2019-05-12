@@ -1,5 +1,7 @@
 # Winding Tree demo script
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/JirkaChadima/wt-demo-script.svg)](https://greenkeeper.io/)
+
 This collection of scripts is intended as a simple showcase of what
 Winding Tree platform is currently capable of. It uses only
 [@windingtree/wt-js-libs](https://github.com/windingtree/wt-js-libs/) with off-chain adapters:

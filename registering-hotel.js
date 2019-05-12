@@ -19,7 +19,7 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
 // 4. Register your hotel to Winding Tree platform
 (async () => {
   // Get an instance of WTIndex wrapper
-  const index = await libs.getWTIndex('0xfb562057d613175c850df65e435bb0824b65d319');
+  const index = await libs.getWTIndex('hotels', '0xB309875d8b24D522Ea0Ac57903c8A0b0C93C414A');
 
   // Create a Wallet abstraction and unlock it.
   const wallet = await libs.createWallet(WALLET_FILE);

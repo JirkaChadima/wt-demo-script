@@ -4,7 +4,7 @@ const libs = require('./config');
 // This has to be in an async block due to the nature of distributed data
 (async () => {
   // Get an instance of WTIndex wrapper
-  const index = await libs.getWTIndex('0xfb562057d613175c850df65e435bb0824b65d319');
+  const index = await libs.getWTIndex('hotels', '0xB309875d8b24D522Ea0Ac57903c8A0b0C93C414A');
 
   // We can get all hotels available in the WTIndex
   // - We will get only hotels on valid and accessible addresses
@@ -28,7 +28,7 @@ const libs = require('./config');
       // OR with much finer control and a lot of await calls, you can do this:
       
       // This actually fetches data from a hotel smart contract
-      //const hotelDataUri = await hotel.dataUri;
+      const hotelDataUri = await hotel.dataUri;
       // But it gets cached, so the second call is way faster
       //const hotelDataUri2 = await hotel.dataUri;
 

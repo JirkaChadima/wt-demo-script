@@ -1,11 +1,11 @@
 // 1. Load the libs
-const WTLibs = require('@windingtree/wt-js-libs');
-const SwarmAdapter = require('@windingtree/off-chain-adapter-swarm');
-const HttpAdapter = require('@windingtree/off-chain-adapter-http');
+const { WtJsLibs } = require('@windingtree/wt-js-libs');
+const { SwarmAdapter } = require('@windingtree/off-chain-adapter-swarm');
+const { HttpAdapter } = require('@windingtree/off-chain-adapter-http');
 
 // 2. Configure the wt-js-libs
-module.exports = WTLibs.createInstance({
-  dataModelOptions: {
+module.exports = WtJsLibs.createInstance({
+  onChainDataOptions: {
     // We are using Ropsten as testnet, our demo index is on 0x407f550023eb6ad8a4797844489e17c5ced17e06
     provider: 'https://ropsten.infura.io/',
   },

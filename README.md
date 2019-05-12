@@ -1,16 +1,11 @@
 # Winding Tree demo script
 
 This collection of scripts is intended as a simple showcase of what
-Winding Tree platform is currently capable of.
-
-It uses only [@windingtree/wt-js-libs](https://github.com/windingtree/wt-js-libs/tree/proposal/next) showcases access to data stored on
+Winding Tree platform is currently capable of. It uses only
+[@windingtree/wt-js-libs](https://github.com/windingtree/wt-js-libs/) with off-chain adapters:
 
 - [https](https://github.com/windingtree/off-chain-adapter-http)
 - [swarm](https://github.com/windingtree/off-chain-adapter-swarm)
 
-You can easily verify by yourself that the hotel data is actually stored both on-chain and off-chain:
-
-- https data: https://jirkachadima.cz/wt/hotel-data-index.json, https://jirkachadima.cz/wt/hotel-description.json
-- swarm data: https://swarm-gateways.net/bzz-raw:/51faac7dc1cc1c35a7b2f95bbfa26b398e7b466bea98810665e85cecce5fcebc,
-https://swarm-gateways.net/bzz-raw:/cd8262d53543b6a4f96d609a730946f00a93d03ddb30b497aa5bfde5c7a5552c
-
+You can easily verify by yourself that the transactions are actually
+called [on-chain](https://ropsten.etherscan.io/address/0xB309875d8b24D522Ea0Ac57903c8A0b0C93C414A).

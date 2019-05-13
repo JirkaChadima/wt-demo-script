@@ -51,20 +51,13 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
     // to create and sign the guarantee.
     const monthFromNow = new Date();
     monthFromNow.setMonth(monthFromNow.getMonth() + 1);
+    
     // Claim has to contain both hotel and guarantor address and has to expire
-    const rawClaim = {
+    const guarantee = await wallet.encodeAndSignData({
       "hotel": newHotelAddress,
       "guarantor": wallet.getAddress(),
       "expiresAt": monthFromNow.getTime(),
-    };
-    const hexClaim = web3utils.utf8ToHex(JSON.stringify(rawClaim));
-
-    // TODO replace calling an internal API after implementing https://github.com/windingtree/wt-js-libs/issues/284
-    const signed = await wallet._account.sign(JSON.stringify(hexClaim));
-    const guarantee = {
-      claim: hexClaim,
-      signature: signed.signature,
-    };
+    }, 'guarnator');
     // After generating a guarantee, it has to be published alongside hotel data
     // on offChainDataUri.
     console.log('Guarantee would look like:');

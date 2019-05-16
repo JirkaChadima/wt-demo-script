@@ -57,7 +57,7 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
       "hotel": newHotelAddress,
       "guarantor": wallet.getAddress(),
       "expiresAt": monthFromNow.getTime(),
-    }, 'guarnator');
+    }, 'guarantor');
     // After generating a guarantee, it has to be published alongside hotel data
     // on offChainDataUri.
     console.log('Guarantee would look like:');

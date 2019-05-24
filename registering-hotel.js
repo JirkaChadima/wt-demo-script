@@ -53,15 +53,19 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
     monthFromNow.setMonth(monthFromNow.getMonth() + 1);
     
     // Claim has to contain both hotel and guarantor address and has to expire
-    const signature = await wallet.signData(JSON.stringify({
+    const claim = web3utils.utf8ToHex(JSON.stringify({
       "hotel": newHotelAddress,
       "guarantor": wallet.getAddress(),
       "expiresAt": monthFromNow.getTime(),
     }));
+    const signature = await wallet.signData(claim);
     // After generating a guarantee, it has to be published alongside hotel data
     // on offChainDataUri.
-    console.log('Signature would look like:');
-    console.log(signature);
+    console.log('Guarantee would look like:');
+    console.log({
+      claim,
+      signature
+    });
   } finally {
     // Don't forget to lock your wallet after you are done, you
     // don't want to leave your private keys lying around.

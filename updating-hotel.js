@@ -18,22 +18,22 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
 
 // 4. Update your hotel on Winding Tree platform
 (async () => {
-  // Get an instance of WTIndex wrapper
-  const index = await libs.getWTIndex('hotels', '0xB309875d8b24D522Ea0Ac57903c8A0b0C93C414A');
+  // Get an instance of your organization. This will work only for ORG.IDs created
+  // by the OrganizationFactory
+  const organization = await libs.getUpdateableOrganization('0xA5aE9935BD5D914A985b874B8a743eD2E89E76C7');
 
   // Create a Wallet abstraction and unlock it.
   const wallet = await libs.createWallet(WALLET_FILE);
   wallet.unlock(PASSWORD);
 
-  // Get a hotel instance
-  const hotel = await index.getHotel('0x43cB858A53447d3c2aaF1360F266292621d17b47');
-  // Change the hotel dataUri
-  hotel.dataUri = offChainDataUri;
+  organization.orgJsonUri = offChainDataUri;
   
   try {
     // Update the hotel data on-chain
     // a. Get ready transaction data - update may produce multiple transactions
-    const transactionDataList = await index.updateHotel(hotel);
+    const transactionDataList = await organization.updateOnChainData({
+      from: wallet.getAddress()
+    });
     let receipt, transactions = [];
     // b. Sign and send all of the transactions. You probably don't have to use our wallet abstraction.
     for (let { transactionData, eventCallbacks } of transactionDataList) {
@@ -42,7 +42,7 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
       transactions.push(wallet.signAndSendTransaction(transactionData, eventCallbacks));
     }
     const receipts = await Promise.all(transactions);
-    for(let receipt of receipts) {
+    for (let receipt of receipts) {
       // After the transaction is mined, you get
       // a receipt which contains a transaciontHash, among other useful things.
       console.log('transaction to check: ', receipt.transactionHash);

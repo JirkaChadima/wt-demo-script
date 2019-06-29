@@ -10,4 +10,4 @@ Winding Tree platform is currently capable of. It uses only
 - [swarm](https://github.com/windingtree/off-chain-adapter-swarm)
 
 You can easily verify by yourself that the transactions are actually
-called [on-chain](https://ropsten.etherscan.io/address/0xB309875d8b24D522Ea0Ac57903c8A0b0C93C414A).
+called [on-chain by checking on Etherscan](https://ropsten.etherscan.io/address/0xB309875d8b24D522Ea0Ac57903c8A0b0C93C414A).

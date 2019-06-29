@@ -15,21 +15,23 @@ const PASSWORD = 'windingtree';
 // 3. Remove your hotel from Winding Tree platform
 (async () => {
   // Get an instance of WTIndex wrapper
-  const index = await libs.getWTIndex('hotels', '0xB309875d8b24D522Ea0Ac57903c8A0b0C93C414A');
+  const directory = await libs.getDirectory('hotels', '0x8ea119A7Ef0Ac4c1a83a3BB6D1aa1a3afcAfDE8b');
 
   // Create a Wallet abstraction and unlock it.
   const wallet = await libs.createWallet(WALLET_FILE);
   wallet.unlock(PASSWORD);
 
-
-  // Get a hotel instance
-  const hotel = await index.getHotel('0x43cB858A53447d3c2aaF1360F266292621d17b47');
+  // Note down a hotel address
+  const hotelAddress = '0xA5aE9935BD5D914A985b874B8a743eD2E89E76C7';
 
   
   try {
     // Remove the hotel
     // a. Get ready transaction data
-    const { transactionData, eventCallbacks } = await index.removeHotel(hotel);
+    const { transactionData, eventCallbacks } = await directory.remove({
+      address: hotelAddress,
+      owner: wallet.getAddress(),
+    });
     // b. Sign and send the transaction. You probably don't have to use our wallet abstraction.
     // This signs a transaction and sends it to be mined. You can get finer control
     // of this by using your own eventCallbacks, not awaiting the Promise etc.

@@ -20,7 +20,8 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
 // 4. Register your hotel to Winding Tree platform
 (async () => {
   // Get an instance of WTIndex wrapper
-  const index = await libs.getWTIndex('hotels', '0xB309875d8b24D522Ea0Ac57903c8A0b0C93C414A');
+  const directory = await libs.getDirectory('hotels', '0x8ea119A7Ef0Ac4c1a83a3BB6D1aa1a3afcAfDE8b');
+  const factory = await libs.getFactory('0x78D1548E03660093B51159De0E615ea8F6B9eaF9');
 
   // Create a Wallet abstraction and unlock it.
   const wallet = await libs.createWallet(WALLET_FILE);
@@ -29,18 +30,20 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
   try {
     // Register the hotel itself
     // a. Get ready transaction data
-    const { hotel, transactionData, eventCallbacks } = await index.addHotel({
-      manager: wallet.getAddress(),
-      dataUri: offChainDataUri,
-    });
+    // You can also do this in two transactions - create on the Factory and add on the directory
+    const { organization, transactionData, eventCallbacks } = await factory.createAndAddOrganization({
+      owner: wallet.getAddress(),
+      orgJsonUri: offChainDataUri,
+    }, '0x8ea119A7Ef0Ac4c1a83a3BB6D1aa1a3afcAfDE8b');
     // b. Sign and send the transaction. You probably don't have to use our wallet abstraction.
     // This signs a transaction and waits for it to be mined. You can get finer control
     // of this by using your own eventCallbacks, not waiting for the promise to be resolved etc.
     const receipt = await wallet.signAndSendTransaction(transactionData, eventCallbacks);
     // After the transaction is mined, one of the eventCallbacks
     // sets the address of the freshly created hotel.
-    const newHotelAddress = hotel.address;
-    console.log('hotel address: ', newHotelAddress);
+    const newOrganization = await organization;
+    const newHotelAddress = newOrganization.address;
+    console.log('hotel ORG.ID address: ', newHotelAddress);
 
     // To add a guarantor to a hotel, we need to create a guarantee.
     // Normally it would have been a trusted third-party Ethereum address,
@@ -54,9 +57,9 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
     
     // Claim has to contain both hotel and guarantor address and has to expire
     const claim = web3utils.utf8ToHex(JSON.stringify({
-      "hotel": newHotelAddress,
+      "subject": newHotelAddress,
       "guarantor": wallet.getAddress(),
-      "expiresAt": monthFromNow.getTime(),
+      "expiresAt": monthFromNow.getTime() / 1000,
     }));
     const signature = await wallet.signData(claim);
     // After generating a guarantee, it has to be published alongside hotel data

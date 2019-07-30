@@ -15,15 +15,15 @@ const PASSWORD = 'windingtree';
 // 3. Remove your hotel from Winding Tree platform
 (async () => {
   // Get an instance of WTIndex wrapper
-  const directory = await libs.getDirectory('hotels', '0x8ea119A7Ef0Ac4c1a83a3BB6D1aa1a3afcAfDE8b');
+  const entrypoint = await libs.getEntrypoint('0xa268937c2573e2AB274BF6d96e88FfE0827F0D4D');
+  const directory = await entrypoint.getSegmentDirectory('hotels');
 
   // Create a Wallet abstraction and unlock it.
   const wallet = await libs.createWallet(WALLET_FILE);
   wallet.unlock(PASSWORD);
 
   // Note down a hotel address
-  const hotelAddress = '0xA5aE9935BD5D914A985b874B8a743eD2E89E76C7';
-
+  const hotelAddress = '0x40D0ac93E893c75950A90a5b8d708d6D309967aD';
   
   try {
     // Remove the hotel
@@ -44,5 +44,4 @@ const PASSWORD = 'windingtree';
     // don't want to leave your private keys lying around.
     wallet.lock();
   }
-
 })();

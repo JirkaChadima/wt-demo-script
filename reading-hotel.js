@@ -4,7 +4,8 @@ const libs = require('./config');
 // This has to be in an async block due to the nature of distributed data
 (async () => {
   // Get an instance of WTIndex wrapper
-  const directory = await libs.getDirectory('hotels', '0x8ea119A7Ef0Ac4c1a83a3BB6D1aa1a3afcAfDE8b');
+  const entrypoint = await libs.getEntrypoint('0xa268937c2573e2AB274BF6d96e88FfE0827F0D4D');
+  const directory = await entrypoint.getSegmentDirectory('hotels');
 
   // We can get all hotels available in the Directory
   // - We will get only hotels on valid and accessible addresses
@@ -23,6 +24,7 @@ const libs = require('./config');
         address: await hotel.address,
         owner: await hotel.owner,
         orgJsonUri: await hotel.orgJsonUri,
+        orgJsonHash: await hotel.orgJsonHash,
       });
 
       // OR with much finer control and a lot of await calls, you can do this:

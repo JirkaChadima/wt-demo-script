@@ -14,13 +14,14 @@ const PASSWORD = 'windingtree';
 
 // 3. Get your off-chain data ready
 // This is not provided by wt-js-libs out of the box
-const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
+const offChainDataUri = 'https://gist.githubusercontent.com/JirkaChadima/9c86f9ed1cfd157f71a172ee9379f35f/raw/0287be953438ba04a9fb98b625589b2b28c64b8b/legal-entity-hotel-api.json';
+const offChainDataHash = '0xea937104edca4af1f37e47808a5667173e83cc6033e0cf6e6a3c9f7c102b8beb';
 
 // 4. Update your hotel on Winding Tree platform
 (async () => {
   // Get an instance of your organization. This will work only for ORG.IDs created
   // by the OrganizationFactory
-  const organization = await libs.getUpdateableOrganization('0xA5aE9935BD5D914A985b874B8a743eD2E89E76C7');
+  const organization = await libs.getUpdateableOrganization('0x40D0ac93E893c75950A90a5b8d708d6D309967aD');
 
   // Create a Wallet abstraction and unlock it.
   const wallet = await libs.createWallet(WALLET_FILE);

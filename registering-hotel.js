@@ -15,13 +15,15 @@ const PASSWORD = 'windingtree';
 
 // 3. Get your off-chain data ready
 // This is not provided by wt-js-libs out of the box
-const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
+const offChainDataUri = 'https://gist.githubusercontent.com/JirkaChadima/9c86f9ed1cfd157f71a172ee9379f35f/raw/0287be953438ba04a9fb98b625589b2b28c64b8b/legal-entity-hotel-api.json';
+const offChainDataHash = '0xea937104edca4af1f37e47808a5667173e83cc6033e0cf6e6a3c9f7c102b8beb';
 
 // 4. Register your hotel to Winding Tree platform
 (async () => {
   // Get an instance of WTIndex wrapper
-  const directory = await libs.getDirectory('hotels', '0x8ea119A7Ef0Ac4c1a83a3BB6D1aa1a3afcAfDE8b');
-  const factory = await libs.getFactory('0x78D1548E03660093B51159De0E615ea8F6B9eaF9');
+  const entrypoint = await libs.getEntrypoint('0xa268937c2573e2AB274BF6d96e88FfE0827F0D4D');
+  const directory = await entrypoint.getSegmentDirectory('hotels');
+  const factory = await entrypoint.getOrganizationFactory();
 
   // Create a Wallet abstraction and unlock it.
   const wallet = await libs.createWallet(WALLET_FILE);
@@ -34,7 +36,8 @@ const offChainDataUri = 'https://jirkachadima.cz/wt/hotel-data-index.json';
     const { organization, transactionData, eventCallbacks } = await factory.createAndAddOrganization({
       owner: wallet.getAddress(),
       orgJsonUri: offChainDataUri,
-    }, '0x8ea119A7Ef0Ac4c1a83a3BB6D1aa1a3afcAfDE8b');
+      orgJsonHash: offChainDataHash,
+    }, directory.address);
     // b. Sign and send the transaction. You probably don't have to use our wallet abstraction.
     // This signs a transaction and waits for it to be mined. You can get finer control
     // of this by using your own eventCallbacks, not waiting for the promise to be resolved etc.

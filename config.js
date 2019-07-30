@@ -6,7 +6,7 @@ const HttpAdapter = require('@windingtree/off-chain-adapter-http');
 // 2. Configure the wt-js-libs
 module.exports = WtJsLibs.createInstance({
   onChainDataOptions: {
-    // We are using Ropsten as testnet, our demo index is on 0x407f550023eb6ad8a4797844489e17c5ced17e06
+    // We are using Ropsten as testnet, our demo entrypoint is on 0xa268937c2573e2AB274BF6d96e88FfE0827F0D4D
     provider: 'https://ropsten.infura.io/',
   },
   offChainDataOptions: {
